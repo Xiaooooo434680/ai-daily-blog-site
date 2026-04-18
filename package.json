@@ -1,0 +1,15 @@
+{
+  "name": "ai-daily-blog-site",
+  "version": "1.0.0",
+  "description": "AI Daily Blog - 基于 Karpathy 推荐的技术博客每日精选",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3",
+    "vue": "^3.5.13",
+    "vitepress-plugin-mermaid": "^2.0.17"
+  }
+}
