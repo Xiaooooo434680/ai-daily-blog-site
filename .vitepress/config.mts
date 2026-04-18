@@ -1,41 +1,31 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import { fileURLToPath } from 'url'
-import { glob } from 'glob'
-import { readFileSync, writeFileSync } from 'fs'
 import { join, dirname } from 'path'
-import { readdir, stat } from 'fs/promises'
+import { readdirSync } from 'fs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-// 生成侧边栏配置
-async function generateSidebar() {
-  const docsDir = join(__dirname, '../docs')
-
+function getDateDirs() {
   try {
-    const entries = readdir(docsDir)
-    const dateDirs = (await entries)
+    const docsDir = join(__dirname, '../docs')
+    return readdirSync(docsDir)
       .filter(n => /^\d{4}-\d{2}-\d{2}-AI-Daily-Blog$/.test(n))
       .sort()
-
-    const groups = dateDirs.map(date => {
-      return {
-        text: date.replace(/-AI-Daily-Blog/, ''),
-        items: [
-          { text: '今日概要', link: `/${date}/AI-Daily-Blog-Summary` },
-          { text: '今日必读 Top 3', link: `/${date}/AI-Daily-Blog-Top` }
-        ]
-      }
-    })
-
-    return groups.length > 0 ? [{ text: '📅 日报归档', items: groups }] : []
   } catch {
     return []
   }
 }
 
-// 使用 await
-const sidebarConfig = await generateSidebar()
+const dateDirs = getDateDirs()
+
+const sidebarItems = dateDirs.map(date => ({
+  text: date.replace(/-AI-Daily-Blog/, ''),
+  items: [
+    { text: '今日概要', link: `/${date}/AI-Daily-Blog-Summary` },
+    { text: '今日必读 Top 3', link: `/${date}/AI-Daily-Blog-Top` }
+  ]
+}))
 
 export default withMermaid(defineConfig({
   title: 'AI Daily Blog',
@@ -50,10 +40,12 @@ export default withMermaid(defineConfig({
       { text: '关于', link: '/about' }
     ],
 
-    sidebar: sidebarConfig,
+    sidebar: sidebarItems.length > 0
+      ? [{ text: '📅 日报归档', items: sidebarItems }]
+      : [],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/super-xiao/ai-daily-blog-site' }
+      { icon: 'github', link: 'https://github.com/Xiaooooo434680/ai-daily-blog-site' }
     ],
 
     footer: {
