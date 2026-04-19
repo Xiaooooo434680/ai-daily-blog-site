@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 function getDateDirs() {
   try {
-    const docsDir = join(__dirname, '../docs')
+    const docsDir = join(__dirname, '..')
     return readdirSync(docsDir)
       .filter(n => /^\d{4}-\d{2}-\d{2}-AI-Daily-Blog$/.test(n))
       .sort()
