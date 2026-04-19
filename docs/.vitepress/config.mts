@@ -27,6 +27,8 @@ const sidebarItems = dateDirs.map(date => ({
 }))
 
 export default defineConfig({
+  base: '/ai-daily-blog-site/',
+
   title: 'AI Daily Blog',
   description: '基于 Karpathy 推荐的 92 个顶级技术博客，AI 精选摘要',
 
