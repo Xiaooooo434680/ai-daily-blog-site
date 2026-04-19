@@ -5,7 +5,6 @@ import './custom.css'
 
 export default {
   extends: defineAsyncComponent(() => import('vitepress/theme')),
-  Layout: () => h('div'),
   setup() {
     onMounted(() => {
       // Mermaid 深色模式修复
